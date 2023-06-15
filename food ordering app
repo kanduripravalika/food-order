@@ -1,0 +1,229 @@
+import random
+
+class FoodItem:
+    def __init__(self, name, quantity, price, discount, stock):
+        self.food_id = random.randint(1000, 9999)
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        self.discount = discount
+        self.stock = stock
+
+class Admin:
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+class User:
+    def __init__(self, full_name, phone_number, email, address, password):
+        self.full_name = full_name
+        self.phone_number = phone_number
+        self.email = email
+        self.address = address
+        self.password = password
+
+class FoodOrderingApp:
+    def __init__(self):
+        self.food_items = []
+        self.admins = []
+        self.users = []
+
+    def add_food_item(self, name, quantity, price, discount, stock):
+        food_item = FoodItem(name, quantity, price, discount, stock)
+        self.food_items.append(food_item)
+        print("Food item added successfully!")
+
+    def edit_food_item(self, food_id, name, quantity, price, discount, stock):
+        for food_item in self.food_items:
+            if food_item.food_id == food_id:
+                food_item.name = name
+                food_item.quantity = quantity
+                food_item.price = price
+                food_item.discount = discount
+                food_item.stock = stock
+                print("Food item edited successfully!")
+                return
+        print("Food item not found.")
+
+    def view_food_items(self):
+        for food_item in self.food_items:
+            print(f"Food ID: {food_item.food_id}")
+            print(f"Name: {food_item.name}")
+            print(f"Quantity: {food_item.quantity}")
+            print(f"Price: {food_item.price}")
+            print(f"Discount: {food_item.discount}")
+            print(f"Stock: {food_item.stock}")
+            print("-------------------------")
+
+    def remove_food_item(self, food_id):
+        for food_item in self.food_items:
+            if food_item.food_id == food_id:
+                self.food_items.remove(food_item)
+                print("Food item removed successfully!")
+                return
+        print("Food item not found.")
+
+    def register_user(self, full_name, phone_number, email, address, password):
+        user = User(full_name, phone_number, email, address, password)
+        self.users.append(user)
+        print("User registration successful!")
+
+    def login_user(self, email, password):
+        for user in self.users:
+            if user.email == email and user.password == password:
+                print("User login successful!")
+                return
+        print("Invalid user credentials. Please try again.")
+
+    def place_order(self, user):
+        print("Available Food Items:")
+        for food_item in self.food_items:
+            print(f"{food_item.name} ({food_item.quantity}) [INR {food_item.price}]")
+        
+        selected_items = input("Enter the array of food item numbers you want to order (comma-separated): ")
+        selected_items = list(map(int, selected_items.split(',')))
+
+        order_items = []
+        total_cost = 0
+
+        for index in selected_items:
+            if index >= 1 and index <= len(self.food_items):
+                food_item = self.food_items[index - 1]
+                order_items.append(food_item)
+                total_cost += food_item.price
+
+        print("Selected Items:")
+        for food_item in order_items:
+            print(f"{food_item.name} ({food_item.quantity}) [INR {food_item.price}]")
+
+        place_order = input("Do you want to place the order? (yes/no): ")
+        if place_order.lower() == "yes":
+            print("Order placed successfully!")
+    def order_history(self, user):       
+        print("Order History")        
+    def update_profile(self, user):        
+        print("Update Profile")       
+app = FoodOrderingApp()
+admin = Admin("admin@example.com", "adminpassword")
+app.admins.append(admin)
+print("Admin registration successful!")
+app.add_food_item("veg manchuria", "250gm", 140, 0, 100)
+app.add_food_item("paneer manchuria", "250gm", 320, 0, 50)
+app.add_food_item("tawa paneer", "500gm", 900, 0, 20)
+app.add_food_item("veg biriyani", "500gm", 240, 0, 100)
+app.add_food_item("naan", "2", 100, 0, 50)
+app.add_food_item("rumal rotti", "5",200, 0, 20)
+app.add_food_item("kaju curry", "150gm", 200, 0, 100)
+app.add_food_item(" kaju paneer ", "150gm", 320, 0, 50)
+app.add_food_item("mixed vegitable", "150gm", 150, 0, 20)
+
+app.view_food_items()
+
+app.remove_food_item(1000)
+
+app.register_user("John ", "9876543210", "user@example.com", "123 Main St", "password123")
+app.register_user("Jane ", "1234567890", "jane@example.com", "456 Elm St", "password456")
+
+app.login_user("user@example.com", "password123")
+
+app.place_order(app.users[0])
+
+app.order_history(app.users[0])
+
+app.update_profile(app.users[0])
+
+
+excepted output:
+Admin registration successful!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food item added successfully!
+Food ID: 2040
+Name: veg manchuria
+Quantity: 250gm
+Price: 140
+Discount: 0
+Stock: 100
+-------------------------
+Food ID: 9830
+Name: paneer manchuria
+Quantity: 250gm
+Price: 320
+Discount: 0
+Stock: 50
+-------------------------
+Food ID: 2087
+Name: tawa paneer
+Quantity: 500gm
+Price: 900
+Discount: 0
+Stock: 20
+-------------------------
+Food ID: 3941
+Name: veg biriyani
+Quantity: 500gm
+Price: 240
+Discount: 0
+Stock: 100
+-------------------------
+Food ID: 3888
+Name: naan
+Quantity: 2
+Price: 100
+Discount: 0
+Stock: 50
+-------------------------
+Food ID: 7720
+Name: rumal rotti
+Quantity: 5
+Price: 200
+Discount: 0
+Stock: 20
+-------------------------
+Food ID: 8816
+Name: kaju curry
+Quantity: 150gm
+Price: 200
+Discount: 0
+Stock: 100
+-------------------------
+Food ID: 8506
+Name:  kaju paneer 
+Quantity: 150gm
+Price: 320
+Discount: 0
+Stock: 50
+-------------------------
+Food ID: 4218
+Name: mixed vegitable
+Quantity: 150gm
+Price: 150
+Discount: 0
+Stock: 20
+-------------------------
+Food item not found.
+User registration successful!
+User registration successful!
+User login successful!
+Available Food Items:
+veg manchuria (250gm) [INR 140]
+paneer manchuria (250gm) [INR 320]
+tawa paneer (500gm) [INR 900]
+veg biriyani (500gm) [INR 240]
+naan (2) [INR 100]
+rumal rotti (5) [INR 200]
+kaju curry (150gm) [INR 200]
+ kaju paneer  (150gm) [INR 320]
+mixed vegitable (150gm) [INR 150]
+Enter the array of food item numbers you want to order (comma-separated):4218,3888,3941
+Selected Items:
+Do you want to place the order? (yes/no): yes
+Order placed successfully!
+Order History
+Update Profile
